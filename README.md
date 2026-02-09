@@ -2,13 +2,9 @@
 
 An MCP server that exposes Prague's Golemio open data API to AI assistants. Query public transit departures, air quality, parking availability, and more.
 
-## Setup
+## Installation
 
 Get an API key from https://api.golemio.cz/api-keys/
-
-### Standard systems (macOS, Ubuntu, etc.)
-
-Install uv if you haven't: `curl -LsSf https://astral.sh/uv/install.sh | sh`
 
 Add to your MCP configuration (e.g., `~/.mcp.json`):
 
@@ -16,11 +12,8 @@ Add to your MCP configuration (e.g., `~/.mcp.json`):
 {
   "mcpServers": {
     "golemio": {
-      "command": "uv",
-      "args": [
-        "--directory", "/absolute/path/to/golemio-mcp-server",
-        "run", "golemio_server.py"
-      ],
+      "command": "uvx",
+      "args": ["golemio-mcp"],
       "env": {
         "GOLEMIO_API_KEY": "your-api-key"
       }
@@ -29,26 +22,7 @@ Add to your MCP configuration (e.g., `~/.mcp.json`):
 }
 ```
 
-### NixOS
-
-On NixOS, uv needs to use the system Python to avoid dynamic linking issues:
-
-```json
-{
-  "mcpServers": {
-    "golemio": {
-      "command": "nix-shell",
-      "args": [
-        "-p", "uv",
-        "--run", "UV_PYTHON=/run/current-system/sw/bin/python3 uv --directory /absolute/path/to/golemio-mcp-server run golemio_server.py"
-      ],
-      "env": {
-        "GOLEMIO_API_KEY": "your-api-key"
-      }
-    }
-  }
-}
-```
+Requires [uv](https://docs.astral.sh/uv/getting-started/installation/) to be installed.
 
 ## Available Tools
 
@@ -81,5 +55,42 @@ uv sync
 uv run pytest -v
 
 # Run server
-uv run golemio_server.py
+uv run golemio-mcp
+```
+
+### Local MCP configuration
+
+To run from a local clone instead of PyPI:
+
+```json
+{
+  "mcpServers": {
+    "golemio": {
+      "command": "uv",
+      "args": ["--directory", "/path/to/golemio-mcp-server", "run", "golemio-mcp"],
+      "env": {
+        "GOLEMIO_API_KEY": "your-api-key"
+      }
+    }
+  }
+}
+```
+
+On NixOS, use system Python to avoid dynamic linking issues:
+
+```json
+{
+  "mcpServers": {
+    "golemio": {
+      "command": "nix-shell",
+      "args": [
+        "-p", "uv",
+        "--run", "UV_PYTHON=/run/current-system/sw/bin/python3 uv --directory /path/to/golemio-mcp-server run golemio-mcp"
+      ],
+      "env": {
+        "GOLEMIO_API_KEY": "your-api-key"
+      }
+    }
+  }
+}
 ```
