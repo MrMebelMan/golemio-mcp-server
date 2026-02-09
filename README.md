@@ -6,14 +6,21 @@ An MCP server that exposes Prague's Golemio open data API to AI assistants. Quer
 
 Get an API key from https://api.golemio.cz/api-keys/
 
-Add to your MCP configuration (e.g., `.mcp.json`):
+### Standard systems (macOS, Ubuntu, etc.)
+
+Install uv if you haven't: `curl -LsSf https://astral.sh/uv/install.sh | sh`
+
+Add to your MCP configuration (e.g., `~/.mcp.json`):
 
 ```json
 {
   "mcpServers": {
     "golemio": {
-      "command": "nix-shell",
-      "args": ["-p", "uv", "--run", "UV_PYTHON=/run/current-system/sw/bin/python3 uv --directory /home/vlad/golemio_mcp run golemio_server.py"],
+      "command": "uv",
+      "args": [
+        "--directory", "/absolute/path/to/golemio-mcp-server",
+        "run", "golemio_server.py"
+      ],
       "env": {
         "GOLEMIO_API_KEY": "your-api-key"
       }
@@ -22,7 +29,26 @@ Add to your MCP configuration (e.g., `.mcp.json`):
 }
 ```
 
-On non-NixOS systems, use `uv run golemio_server.py` directly.
+### NixOS
+
+On NixOS, uv needs to use the system Python to avoid dynamic linking issues:
+
+```json
+{
+  "mcpServers": {
+    "golemio": {
+      "command": "nix-shell",
+      "args": [
+        "-p", "uv",
+        "--run", "UV_PYTHON=/run/current-system/sw/bin/python3 uv --directory /absolute/path/to/golemio-mcp-server run golemio_server.py"
+      ],
+      "env": {
+        "GOLEMIO_API_KEY": "your-api-key"
+      }
+    }
+  }
+}
+```
 
 ## Available Tools
 
