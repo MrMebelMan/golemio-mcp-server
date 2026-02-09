@@ -1,6 +1,6 @@
 [project]
 name = "golemio-mcp"
-version = "0.1.0"
+version = "0.1.1"
 description = "MCP server exposing Prague's Golemio API for AI assistants"
 readme = "README.md"
 requires-python = ">=3.12"
