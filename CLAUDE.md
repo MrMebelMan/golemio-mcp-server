@@ -8,25 +8,35 @@ This project uses `uv` for dependency management. On NixOS, run commands through
 
 ```bash
 # Run all tests
-nix-shell -p uv --run "UV_PYTHON=/run/current-system/sw/bin/python3 uv run pytest test_golemio_server.py -v"
+nix-shell -p uv --run "UV_PYTHON=/run/current-system/sw/bin/python3 uv run pytest tests/ -v"
 
 # Run a single test
-nix-shell -p uv --run "UV_PYTHON=/run/current-system/sw/bin/python3 uv run pytest test_golemio_server.py::TestGetBicycleCounters::test_success -v"
+nix-shell -p uv --run "UV_PYTHON=/run/current-system/sw/bin/python3 uv run pytest tests/test_server.py::TestGetBicycleCounters::test_success -v"
 
 # Add dependencies
 nix-shell -p uv --run "UV_PYTHON=/run/current-system/sw/bin/python3 uv add <package>"
 
 # Run the MCP server directly
-nix-shell -p uv --run "UV_PYTHON=/run/current-system/sw/bin/python3 uv run golemio_server.py"
+nix-shell -p uv --run "UV_PYTHON=/run/current-system/sw/bin/python3 uv run golemio-mcp"
 ```
 
 ## Architecture
 
 This is an MCP (Model Context Protocol) server that exposes Prague's Golemio public data API as tools for AI assistants.
 
+### Project Structure
+
+```
+src/golemio_mcp/
+├── __init__.py      # Exports main()
+└── server.py        # MCP server implementation
+tests/
+└── test_server.py   # Unit tests
+```
+
 ### Core Components
 
-- **golemio_server.py**: Single-file MCP server using FastMCP. Contains:
+- **src/golemio_mcp/server.py**: MCP server using FastMCP. Contains:
   - `make_golemio_request()`: Async helper for all API calls, handles auth headers and parameter filtering
   - `format_geojson_features()`: Generic formatter for GeoJSON responses
   - 12 tool functions decorated with `@mcp.tool()`, each wrapping a Golemio API endpoint

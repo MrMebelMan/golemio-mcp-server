@@ -4,7 +4,7 @@ import pytest
 import respx
 from httpx import Response
 
-import golemio_server
+from golemio_mcp import server as golemio_server
 
 
 @pytest.fixture
