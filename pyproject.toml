@@ -4,6 +4,15 @@ version = "0.1.0"
 description = "MCP server exposing Prague's Golemio API for AI assistants"
 readme = "README.md"
 requires-python = ">=3.12"
+license = "GPL-3.0-or-later"
+authors = [{ name = "Vladyslav Burzakovskyy" }]
+keywords = ["mcp", "golemio", "prague", "api", "public-transit", "transport"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3.12",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries",
+]
 dependencies = [
     "httpx>=0.28.1",
     "mcp[cli]>=1.26.0",
@@ -11,6 +20,14 @@ dependencies = [
 
 [project.scripts]
 golemio-mcp = "golemio_server:main"
+
+[project.urls]
+Homepage = "https://github.com/MrMebelMan/golemio-mcp-server"
+Repository = "https://github.com/MrMebelMan/golemio-mcp-server"
+Issues = "https://github.com/MrMebelMan/golemio-mcp-server/issues"
+
+[tool.setuptools]
+py-modules = ["golemio_server"]
 
 [dependency-groups]
 dev = [
