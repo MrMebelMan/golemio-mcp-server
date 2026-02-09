@@ -24,6 +24,8 @@ Add to your MCP configuration (e.g., `~/.mcp.json`):
 
 Requires [uv](https://docs.astral.sh/uv/getting-started/installation/) to be installed.
 
+> **NixOS users**: `uvx` won't work due to dynamic linking. See [Development](#development) for NixOS-specific configuration.
+
 ## Available Tools
 
 **Public Transit**
