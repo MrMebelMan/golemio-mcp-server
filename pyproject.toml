@@ -12,7 +12,7 @@ license = "GPL-3.0-or-later"
 authors = [{ name = "Vladyslav Burzakovskyy" }]
 keywords = ["mcp", "golemio", "prague", "api", "public-transit", "transport"]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Programming Language :: Python :: 3.12",
     "Intended Audience :: Developers",
     "Topic :: Software Development :: Libraries",
@@ -29,6 +29,7 @@ golemio-mcp = "golemio_mcp:main"
 Homepage = "https://github.com/MrMebelMan/golemio-mcp-server"
 Repository = "https://github.com/MrMebelMan/golemio-mcp-server"
 Issues = "https://github.com/MrMebelMan/golemio-mcp-server/issues"
+Changelog = "https://github.com/MrMebelMan/golemio-mcp-server/releases"
 
 [tool.setuptools.packages.find]
 where = ["src"]
